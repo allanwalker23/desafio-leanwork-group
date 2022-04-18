@@ -35,6 +35,12 @@ interface ResponseTVMaze {
             };
 
             summary: string;
+            schedule: {
+                time: string;
+                days: string[];
+            };
+            officialSite: string;
+            genres: string[];
         }
     ];
 }
@@ -75,7 +81,11 @@ export function Home({ navigation }: any) {
                     rating: movie.rating.average,
                     image_banner: movie.image.original,
                     image_poster: movie.image.original,
-                    url: 'httpr'
+
+                    hour: movie.schedule.time,
+                    days: movie.schedule.days,
+                    url: movie.officialSite,
+                    genres: movie.genres
                 };
                 movies.push(newData);
             });

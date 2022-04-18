@@ -2,14 +2,37 @@ import { FlatList } from 'react-native';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import { Movie } from '../../utils/movies';
+import { Episode, Movie } from '../../utils/movies';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 export const FavoriteButton = styled(BorderlessButton)``;
 
 export const LoveIcon = styled(MaterialIcons)`
     color: red;
     margin-right: 16px;
+`;
+
+export const SelectorIcon = styled(AntDesign)`
+    /* color:${({ theme }) => theme.colors.primary}; */
+`;
+
+export const SelectorText = styled.Text`
+    font-size: ${RFValue(16)}px;
+    font-family: ${({ theme }) => theme.fonts.title};
+    color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const SeasonSelector = styled(BorderlessButton)`
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const SeasonContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
 `;
 
 export const Container = styled.View`
@@ -54,6 +77,7 @@ export const TitleMovie = styled.Text`
     font-family: ${({ theme }) => theme.fonts.title};
     color: ${({ theme }) => theme.colors.primary};
     margin-left: 130px;
+    width: 190px;
 `;
 
 export const Dot = styled.View`
@@ -69,10 +93,34 @@ export const Gender = styled.View`
     flex-direction: row;
 `;
 
+export const LabelContainer = styled.View`
+    align-items: center;
+    margin: 16px;
+`;
+export const Label = styled.Text`
+    font-size: ${RFValue(20)}px;
+    font-family: ${({ theme }) => theme.fonts.title};
+    color: ${({ theme }) => theme.colors.shape};
+`;
+
+export const Item = styled(BorderlessButton)`
+    margin: 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`;
+
+export const SeasonTitle = styled.Text`
+    font-size: ${RFValue(20)}px;
+    font-family: ${({ theme }) => theme.fonts.title};
+    color: ${({ theme }) => theme.colors.shape};
+`;
+
 export const Genres = styled.View`
     flex-direction: row;
     align-items: flex-end;
     margin-left: 130px;
+    width: 100px;
 `;
 
 export const EpisodesWrapper = styled.View`
@@ -80,9 +128,7 @@ export const EpisodesWrapper = styled.View`
 `;
 
 export const GenderName = styled.Text`
-    font-size: ${RFValue(15)}px;
-    font-family: ${({ theme }) => theme.fonts.title};
-    color: ${({ theme }) => theme.colors.shape};
+    color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const ScheduleMovie = styled.Text`
@@ -99,7 +145,6 @@ export const TitleDescription = styled.Text`
     font-size: ${RFValue(25)}px;
     font-family: ${({ theme }) => theme.fonts.title};
     color: ${({ theme }) => theme.colors.shape};
-    margin-bottom: 16px;
 `;
 
 export const DescriptionWrapper = styled.View`
@@ -135,10 +180,18 @@ export const LoadingListContainer = styled.View`
 `;
 
 export const FlatListEpisodes = styled(
-    FlatList as new () => FlatList<Movie>
+    FlatList as new () => FlatList<Episode>
 ).attrs({
     showsVerticalScrollIndicator: false,
     contentContainerStyle: {
         paddingBottom: 120
     }
 })``;
+
+export const ModalContainer = styled.View`
+    flex: 1;
+   
+    margin-top:450px
+    background-color: ${({ theme }) => theme.colors.background};
+    
+`;

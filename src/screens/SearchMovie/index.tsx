@@ -37,6 +37,12 @@ interface ResponseSearchTVMaze {
             };
 
             summary: string;
+            schedule: {
+                time: string;
+                days: string[];
+            };
+            officialSite: string;
+            genres: string[];
         }
     ];
 }
@@ -78,7 +84,11 @@ export function SearchMovie({ navigation }: any) {
                     rating: movie.show.rating.average,
                     image_banner: movie.show.image.original,
                     image_poster: movie.show.image.original,
-                    url: 'httpr'
+
+                    hour: movie.show.schedule.time,
+                    days: movie.show.schedule.days,
+                    url: movie.show.officialSite,
+                    genres: movie.show.genres
                 };
                 movies.push(newData);
             });

@@ -28,6 +28,7 @@ export const ButtonSearch = styled(RectButton)``;
 
 export const Options = styled.View`
     flex-direction: row;
+    align-items: center;
 `;
 
 export const SearchIcon = styled(FontAwesome)`
@@ -56,6 +57,6 @@ export const FlatListMovies = styled(
 export const ButtonFavorites = styled(BorderlessButton)``;
 
 export const LoveIcon = styled(MaterialIcons)`
-    color: red;
+    color: ${({ theme }) => theme.colors.primary};
     margin-right: 16px;
 `;
