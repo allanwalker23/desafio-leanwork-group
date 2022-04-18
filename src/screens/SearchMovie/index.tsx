@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { useFocusEffect } from '@react-navigation/core';
 import { useForm } from 'react-hook-form';
 import { ItemMovie } from '../../components/ItemMovie';
 import { SearchBarForm } from '../../components/SearchBarForm';
 import { useNavigation } from '../../hooks/useNavigation';
-import { Movie, People } from '../../utils/movies';
-import { ActivityIndicator, Alert, Linking } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ActivityIndicator, Linking } from 'react-native';
 import {
     Container,
     FlatListMovies,
@@ -14,10 +11,12 @@ import {
     SearchBarContainer,
     LoadContainer,
     WhithoutMovieContent,
-    TextNotMovie
+    TextNotMovie,
+    IconWithoutMovie
 } from './styles';
 import { api } from '../../services/api';
 import theme from '../../global/theme';
+import { Item } from '../../utils/movies';
 interface FormData {
     searchText: string;
 }
@@ -88,11 +87,11 @@ export function SearchMovie({ navigation }: any) {
             const dataMovie = responseMovie.data;
             const dataPeople = responsePeople.data;
 
-            const movies: Movie[] = [];
+            const movies: Item[] = [];
 
             dataMovie.map(async (movie: any) => {
                 console.log(movie);
-                const newData: Movie = {
+                const newData: Item = {
                     id: String(movie.show.id),
                     title: movie.show.name,
                     description: movie.show.summary,
@@ -140,12 +139,12 @@ export function SearchMovie({ navigation }: any) {
         }
     }
 
-    function handleGoInfoMovie(movie: Movie) {
+    function handleGoInfoMovie(movie: Item) {
         setData(movie);
         navigation.navigate('InfoMovie');
     }
 
-    function handleGoInfoPeople(people: Movie) {
+    function handleGoInfoPeople(people: Item) {
         Linking.openURL(people.url);
     }
 
@@ -171,7 +170,7 @@ export function SearchMovie({ navigation }: any) {
                 </LoadContainer>
             ) : isMovieWithName === false ? (
                 <WhithoutMovieContent>
-                    <MaterialIcons
+                    <IconWithoutMovie
                         name="movie"
                         size={45}
                         color={theme.colors.primary}

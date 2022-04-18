@@ -1,13 +1,16 @@
 import { FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import { Movie } from '../../utils/movies';
+import { Item } from '../../utils/movies';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export const Container = styled.View`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.background};
     align-items: center;
 `;
+
+export const IconWithoutMovie = styled(MaterialIcons)``;
 
 export const SearchBarContainer = styled.View``;
 
@@ -16,7 +19,7 @@ export const ListMoviesContainer = styled.View`
 `;
 
 export const FlatListMovies = styled(
-    FlatList as new () => FlatList<Movie>
+    FlatList as new () => FlatList<Item>
 ).attrs({
     showsVerticalScrollIndicator: false,
     contentContainerStyle: {

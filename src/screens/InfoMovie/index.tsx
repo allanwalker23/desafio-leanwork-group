@@ -43,9 +43,8 @@ import { useNavigation } from '../../hooks/useNavigation';
 import * as Linking from 'expo-linking';
 import { ScrollView } from 'react-native-gesture-handler';
 import { api } from '../../services/api';
-import { Episode, Movie } from '../../utils/movies';
 import { useFocusEffect } from '@react-navigation/native';
-import { ActivityIndicator, Alert, Modal, View } from 'react-native';
+import { Alert, Modal } from 'react-native';
 import { ItemMovie } from '../../components/ItemMovie';
 
 interface ResponseEpisodeTvMaze {
@@ -199,7 +198,7 @@ export function InfoMovie() {
                         )}
 
                         <Genres>
-                            {data.genres.map((gender) => (
+                            {data.genres.map((gender: any) => (
                                 <Gender>
                                     <Dot />
                                     <GenderName>{gender}</GenderName>

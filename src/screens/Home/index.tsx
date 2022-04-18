@@ -3,8 +3,8 @@ import React, { useCallback, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { ItemMovie } from '../../components/ItemMovie';
 import { useNavigation } from '../../hooks/useNavigation';
-import { api, baseUrlImages, languageApi } from '../../services/api';
-import { Movie } from '../../utils/movies';
+import { api } from '../../services/api';
+import { Item } from '../../utils/movies';
 
 import {
     Container,
@@ -47,10 +47,10 @@ interface ResponseTVMaze {
 
 export function Home({ navigation }: any) {
     const { setData } = useNavigation();
-    const [moviesData, setMoviesData] = useState<Movie[]>([]);
+    const [moviesData, setMoviesData] = useState<Item[]>([]);
     const [page, setPage] = useState(2);
 
-    function handleGoInfoMovie(movie: Movie) {
+    function handleGoInfoMovie(movie: Item) {
         setData(movie);
         navigation.navigate('InfoMovie');
     }
@@ -70,10 +70,10 @@ export function Home({ navigation }: any) {
             );
             const dataIMDB = response.data;
 
-            const movies: Movie[] = [];
+            const movies: Item[] = [];
 
             dataIMDB.map(async (movie) => {
-                const newData: Movie = {
+                const newData: Item = {
                     id: String(movie.id),
                     title: movie.name,
                     description: movie.summary,
@@ -85,7 +85,8 @@ export function Home({ navigation }: any) {
                     hour: movie.schedule.time,
                     days: movie.schedule.days,
                     url: movie.officialSite,
-                    genres: movie.genres
+                    genres: movie.genres,
+                    type: 'Movie'
                 };
                 movies.push(newData);
             });
