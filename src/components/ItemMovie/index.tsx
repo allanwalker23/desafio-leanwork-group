@@ -34,14 +34,16 @@ export function ItemMovie({
                         <TitleMovie>{title}</TitleMovie>
                         <InfoMovie>
                             <DateMovie>{date}</DateMovie>
-                            <RatingMovie>
-                                {rating}
-                                <AntDesign
-                                    name="star"
-                                    size={14}
-                                    color={theme.colors.primary}
-                                />
-                            </RatingMovie>
+                            {rating && (
+                                <RatingMovie>
+                                    {rating}
+                                    <AntDesign
+                                        name="star"
+                                        size={14}
+                                        color={theme.colors.primary}
+                                    />
+                                </RatingMovie>
+                            )}
                         </InfoMovie>
                     </ContentViewMovie>
                 </ImageBackground>

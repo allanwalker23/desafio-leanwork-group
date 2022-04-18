@@ -1,17 +1,19 @@
-export interface Movie {
+export interface Item {
     id: string;
     title: string;
     image_poster: string;
     image_banner: string;
-    description: string;
+    description?: string;
     date: string;
-    rating: number;
-    hour: string;
-    days: string[];
-    genres: string[];
+    rating?: number;
+    hour?: string;
+    days?: string[];
+    genres?: string[];
+    type: 'Movie' | 'Person';
 
-    url: string;
+    url?: string;
 }
+
 export interface Episode {
     id: string;
     title: string;

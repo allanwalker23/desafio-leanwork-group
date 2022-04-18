@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { ItemMovie } from '../../components/ItemMovie';
 import { SearchBarForm } from '../../components/SearchBarForm';
 import { useNavigation } from '../../hooks/useNavigation';
-import { Movie } from '../../utils/movies';
-import { ActivityIndicator, Alert } from 'react-native';
+import { Movie, People } from '../../utils/movies';
+import { ActivityIndicator, Alert, Linking } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
     Container,
@@ -19,7 +19,7 @@ import {
 import { api } from '../../services/api';
 import theme from '../../global/theme';
 interface FormData {
-    searchMovie: string;
+    searchText: string;
 }
 
 interface ResponseSearchTVMaze {
@@ -47,6 +47,21 @@ interface ResponseSearchTVMaze {
     ];
 }
 
+interface ResponseSearchPeopleTVMaze {
+    data: [
+        person: {
+            id: number;
+            name: string;
+            birthday: string;
+            image: {
+                medium: string;
+                original: string;
+            };
+            url: string;
+        }
+    ];
+}
+
 export function SearchMovie({ navigation }: any) {
     const { control, handleSubmit } = useForm({});
     const { setData } = useNavigation();
@@ -55,7 +70,7 @@ export function SearchMovie({ navigation }: any) {
     const [isMovieWithName, setIsMovieWithName] = useState(false);
 
     async function handleSearch(data: FormData) {
-        if (data.searchMovie === undefined || data.searchMovie === '') {
+        if (data.searchText === undefined || data.searchText === '') {
             setIsLoading(false);
             setIsMovieWithName(false);
             return;
@@ -63,18 +78,19 @@ export function SearchMovie({ navigation }: any) {
 
         try {
             setIsLoading(true);
-            const response: ResponseSearchTVMaze = await api.get(
-                `/search/shows?q=+${data.searchMovie}`
+            const responseMovie: ResponseSearchTVMaze = await api.get(
+                `/search/shows?q=+${data.searchText}`
             );
-            const dataIMDB = response.data;
-            if (!dataIMDB[0].show) {
-                setIsMovieWithName(false);
-                return;
-            }
+
+            const responsePeople: ResponseSearchPeopleTVMaze = await api.get(
+                `/search/people?q=+${data.searchText}`
+            );
+            const dataMovie = responseMovie.data;
+            const dataPeople = responsePeople.data;
 
             const movies: Movie[] = [];
 
-            dataIMDB.map(async (movie: any) => {
+            dataMovie.map(async (movie: any) => {
                 console.log(movie);
                 const newData: Movie = {
                     id: String(movie.show.id),
@@ -88,10 +104,29 @@ export function SearchMovie({ navigation }: any) {
                     hour: movie.show.schedule.time,
                     days: movie.show.schedule.days,
                     url: movie.show.officialSite,
-                    genres: movie.show.genres
+                    genres: movie.show.genres,
+                    type: 'Movie'
                 };
                 movies.push(newData);
             });
+
+            dataPeople.map(async (people: any) => {
+                const newData: Movie = {
+                    id: String(people.person.id),
+                    title: people.person.name,
+                    date: people.person.birthday,
+                    image_banner: people.person.image.original,
+                    image_poster: people.person.image.original,
+                    url: people.person.url,
+                    type: 'People'
+                };
+                movies.push(newData);
+            });
+
+            if (!movies[0]) {
+                setIsMovieWithName(false);
+                return;
+            }
 
             setMoviesData(movies);
 
@@ -110,13 +145,17 @@ export function SearchMovie({ navigation }: any) {
         navigation.navigate('InfoMovie');
     }
 
+    function handleGoInfoPeople(people: Movie) {
+        Linking.openURL(people.url);
+    }
+
     return (
         <Container>
             <SearchBarContainer>
                 <SearchBarForm
                     icon="search"
                     placeholder="Digite o nome do filme ou ator/atriz"
-                    name="searchMovie"
+                    name="searchText"
                     control={control}
                     maxLength={27}
                     blurOnSubmit
@@ -148,9 +187,13 @@ export function SearchMovie({ navigation }: any) {
                             <ItemMovie
                                 title={item.title}
                                 image={item.image_banner}
-                                rating={item.rating}
+                                rating={item?.rating}
                                 date={item.date}
-                                onPress={() => handleGoInfoMovie(item)}
+                                onPress={() =>
+                                    item.type === 'Movie'
+                                        ? handleGoInfoMovie(item)
+                                        : handleGoInfoPeople(item)
+                                }
                             />
                         )}
                     />
