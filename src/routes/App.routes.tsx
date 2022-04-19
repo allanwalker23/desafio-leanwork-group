@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import theme from '../global/theme';
+import { Favorites } from '../screens/Favorites';
 import { Home } from '../screens/Home';
 import { InfoMovie } from '../screens/InfoMovie';
 import { Login } from '../screens/Login';
@@ -41,6 +42,12 @@ export function AppRoutes() {
                 name="InfoMovie"
                 component={InfoMovie}
                 options={{ title: 'Informações do filme' }}
+            />
+
+            <Screen
+                name="Favorites"
+                component={Favorites}
+                options={{ title: 'Favoritos' }}
             />
         </Navigator>
     );

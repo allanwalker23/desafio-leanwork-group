@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
     Container,
     Header,
@@ -46,6 +48,7 @@ import { api } from '../../services/api';
 import { useFocusEffect } from '@react-navigation/native';
 import { Alert, Modal } from 'react-native';
 import { ItemMovie } from '../../components/ItemMovie';
+import { compareArrays, Episode } from '../../utils/utils';
 
 interface ResponseEpisodeTvMaze {
     data: [
@@ -81,13 +84,39 @@ export function InfoMovie() {
     }
 
     function handleResumeEpisode(resume: string) {
-        Alert.alert('Resumo', resume, [
-            { text: 'OK', onPress: () => console.log('OK Pressed') }
-        ]);
+        Alert.alert('Resumo', resume, [{ text: 'OK', onPress: () => {} }]);
     }
 
-    function addFavorite() {
-        alert(`${data.title} Adicionado como favorito`);
+    async function addFavorite() {
+        try {
+            const get = await AsyncStorage.getItem('@movies_favorites');
+            let currentData = get ? JSON.parse(get) : [];
+
+            const dataFormatted = [...currentData, data];
+
+            const id: [] = [];
+            dataFormatted.map((movie: any) => {
+                id.push(movie.id);
+            });
+
+            const idSet = [...new Set(id)];
+
+            if (compareArrays(id, idSet) === false) {
+                console.log('Diferentes');
+                console.log(idSet);
+                console.log(id);
+                throw new Error(`${data.title} já existe nos favoritos`);
+            }
+
+            await AsyncStorage.setItem(
+                '@movies_favorites',
+                JSON.stringify(dataFormatted)
+            );
+            alert(`${data.title} adicionado aos favoritos`);
+        } catch (e) {
+            alert(e);
+            console.log(e);
+        }
     }
 
     function handleOpenSeasonModal() {
@@ -133,9 +162,8 @@ export function InfoMovie() {
             const episodesFiltered = episodes.filter(
                 (episode) => episode.season === selectedSeason
             );
-            console.log(episodesFiltered);
-            setEpisodesData(episodesFiltered);
 
+            setEpisodesData(episodesFiltered);
             setSeasons(seasonsNotRepeat);
         } catch (error) {
             alert('Erro na aplicação');
@@ -199,7 +227,7 @@ export function InfoMovie() {
 
                         <Genres>
                             {data.genres.map((gender: any) => (
-                                <Gender>
+                                <Gender key={gender}>
                                     <Dot />
                                     <GenderName>{gender}</GenderName>
                                 </Gender>
@@ -277,7 +305,10 @@ export function InfoMovie() {
                     </LabelContainer>
                     <ScrollView>
                         {seasons.map((season) => (
-                            <Item onPress={() => handleSelectSeason(season)}>
+                            <Item
+                                onPress={() => handleSelectSeason(season)}
+                                key={season}
+                            >
                                 <SeasonTitle>Temporada {season}</SeasonTitle>
                                 <SelectorIcon
                                     name="right"

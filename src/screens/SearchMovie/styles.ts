@@ -1,7 +1,7 @@
 import { FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import { Item } from '../../utils/movies';
+import { Item } from '../../utils/utils';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export const Container = styled.View`

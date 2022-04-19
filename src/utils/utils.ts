@@ -25,6 +25,13 @@ export interface Episode {
     season: number;
 }
 
+export function compareArrays(a1: any, a2: any) {
+    return (
+        a1.length === a2.length &&
+        a1.every((value: any, index: any) => value === a2[index])
+    );
+}
+
 // export const movies: Movie[] = [
 //     {
 //         id: '1',

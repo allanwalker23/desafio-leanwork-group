@@ -1,6 +1,7 @@
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
+import { AntDesign } from '@expo/vector-icons';
 
 export const Container = styled(RectButton)`
     width: ${RFValue(340)}px;
@@ -20,7 +21,7 @@ export const ImageBackground = styled.ImageBackground.attrs({
 
 export const ContentViewMovie = styled.View`
     justify-content: flex-end;
-    margin-top: 210px;
+    margin-top: 205px;
 
     background-color: black;
     padding: 0 24px;
@@ -45,4 +46,9 @@ export const InfoMovie = styled.View`
 export const RatingMovie = styled.Text`
     font-family: ${({ theme }) => theme.fonts.card_regular};
     color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const ButtonDeleteAll = styled(BorderlessButton)``;
+export const DeleteIcon = styled(AntDesign)`
+    color: red;
 `;

@@ -1,10 +1,10 @@
-import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { FlatList } from 'react-native';
 import { Movie } from '../../utils/utils';
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
     flex: 1;
@@ -17,6 +17,19 @@ export const Header = styled.View`
     flex-direction: row;
     justify-content: space-between;
 `;
+export const IconWithoutMovie = styled(MaterialIcons)``;
+
+export const ButtonFavorites = styled(BorderlessButton)``;
+
+export const ButtonDeleteAll = styled(BorderlessButton)``;
+export const DeleteIcon = styled(AntDesign)`
+    color: red;
+`;
+
+export const Options = styled.View`
+    flex-direction: row;
+    align-items: center;
+`;
 
 export const Title = styled.Text`
     font-family: ${({ theme }) => theme.fonts.title};
@@ -24,25 +37,20 @@ export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const ButtonSearch = styled(RectButton)``;
-
-export const Options = styled.View`
-    flex-direction: row;
-    align-items: center;
-`;
-
-export const SearchIcon = styled(FontAwesome)`
-    font-size: ${RFValue(24)}px;
-    color: ${({ theme }) => theme.colors.shape};
-`;
-
 export const ListMoviesContainer = styled.View`
     align-items: center;
 `;
 
-export const LoadingListContainer = styled.View`
+export const WhithoutMovieContent = styled.View`
+    flex: 1;
     align-items: center;
     justify-content: center;
+`;
+export const TextNotMovie = styled.Text`
+    color: ${({ theme }) => theme.colors.shape};
+    font-family: ${({ theme }) => theme.fonts.title};
+    margin-top: 7px;
+    font-size: ${RFValue(24)}px;
 `;
 
 export const FlatListMovies = styled(
@@ -53,10 +61,3 @@ export const FlatListMovies = styled(
         paddingBottom: 120
     }
 })``;
-
-export const ButtonFavorites = styled(BorderlessButton)``;
-
-export const LoveIcon = styled(MaterialIcons)`
-    color: ${({ theme }) => theme.colors.primary};
-    margin-right: 16px;
-`;

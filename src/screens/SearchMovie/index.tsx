@@ -16,7 +16,7 @@ import {
 } from './styles';
 import { api } from '../../services/api';
 import theme from '../../global/theme';
-import { Item } from '../../utils/movies';
+import { Item } from '../../utils/utils';
 interface FormData {
     searchText: string;
 }
@@ -90,7 +90,6 @@ export function SearchMovie({ navigation }: any) {
             const movies: Item[] = [];
 
             dataMovie.map(async (movie: any) => {
-                console.log(movie);
                 const newData: Item = {
                     id: String(movie.show.id),
                     title: movie.show.name,

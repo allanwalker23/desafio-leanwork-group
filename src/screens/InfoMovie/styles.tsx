@@ -2,7 +2,7 @@ import { FlatList } from 'react-native';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import { Episode, Movie } from '../../utils/movies';
+import { Episode, Movie } from '../../utils/utils';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -195,3 +195,7 @@ export const ModalContainer = styled.View`
     background-color: ${({ theme }) => theme.colors.background};
     
 `;
+
+export const FlatListSeasons = styled(FlatList as new () => FlatList).attrs({
+    showsVerticalScrollIndicator: false
+})``;

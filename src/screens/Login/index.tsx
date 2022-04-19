@@ -17,6 +17,7 @@ import {
 export function Login({ navigation }: any) {
     function handleStart() {
         navigation.navigate('Home');
+        console.log('Welcome RNMOVIE | Desafio LeanWorkGroup 🔥');
     }
     return (
         <>

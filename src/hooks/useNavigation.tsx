@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useState, useContext } from 'react';
-import { Movie } from '../utils/movies';
+import { Movie } from '../utils/utils';
 
 interface Props {
     children: ReactNode;

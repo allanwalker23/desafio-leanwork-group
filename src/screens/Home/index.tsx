@@ -4,7 +4,7 @@ import { ActivityIndicator } from 'react-native';
 import { ItemMovie } from '../../components/ItemMovie';
 import { useNavigation } from '../../hooks/useNavigation';
 import { api } from '../../services/api';
-import { Item } from '../../utils/movies';
+import { Item } from '../../utils/utils';
 
 import {
     Container,
@@ -60,7 +60,7 @@ export function Home({ navigation }: any) {
     }
 
     function handleGoFavorites() {
-        alert('A implementar');
+        navigation.navigate('Favorites');
     }
 
     async function loadData() {

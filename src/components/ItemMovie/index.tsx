@@ -7,16 +7,21 @@ import {
     ImageBackground,
     InfoMovie,
     TitleMovie,
-    RatingMovie
+    RatingMovie,
+    ButtonDeleteAll,
+    DeleteIcon
 } from './styles';
 import { AntDesign } from '@expo/vector-icons';
 import theme from '../../global/theme';
+import { Item } from '../../utils/utils';
 
 export interface ItemMovieProps extends RectButtonProps {
     title: string;
     image: string;
     date: string;
     rating: number;
+    isExcludable?: boolean;
+    onPressExclude?(item: Item): () => any;
 }
 
 export function ItemMovie({
@@ -24,17 +29,21 @@ export function ItemMovie({
     image,
     date,
     rating,
+    isExcludable = false,
+    onPressExclude,
     ...rest
 }: ItemMovieProps) {
     return (
         <Container {...rest}>
             <>
                 <ImageBackground source={{ uri: image }}>
-                    <ContentViewMovie>
+                    <ContentViewMovie
+                        style={{ marginTop: isExcludable ? 190 : 205 }}
+                    >
                         <TitleMovie>{title}</TitleMovie>
                         <InfoMovie>
                             <DateMovie>{date}</DateMovie>
-                            {rating && (
+                            {rating && !isExcludable && (
                                 <RatingMovie>
                                     {rating}
                                     <AntDesign
@@ -43,6 +52,17 @@ export function ItemMovie({
                                         color={theme.colors.primary}
                                     />
                                 </RatingMovie>
+                            )}
+                            {isExcludable && (
+                                <ButtonDeleteAll
+                                    onPress={() => onPressExclude()}
+                                >
+                                    <DeleteIcon
+                                        name="delete"
+                                        size={30}
+                                        color={theme.colors.primary}
+                                    />
+                                </ButtonDeleteAll>
                             )}
                         </InfoMovie>
                     </ContentViewMovie>
